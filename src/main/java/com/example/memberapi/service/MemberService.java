@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -14,18 +17,32 @@ public class MemberService implements IMemberService{
 
     @Autowired
     private IMemberRepository memberRepository;
+
     @Override
     public List<Member> getAll() {
         return memberRepository.findAll();
     }
 
     @Override
-    public Long addMember(Member member) {
-        return memberRepository.save(member).getId();
+    public Optional<Member> getMemberById(Long id) {
+        return memberRepository.findById(id);
     }
 
     @Override
-    public Long updateMember(Member member) {
-        return memberRepository.save(member).getId();
+    public Member addMember(Member member) {
+        member.setCreateTs(LocalDate.now());
+        member.setLastUpdatedTs(LocalDate.now());
+        return memberRepository.save(member);
     }
+
+    @Override
+    public Member updateMember(Long id, Member member) {
+        Optional<Member> optionalMember = memberRepository.findById(id);
+        if (optionalMember.isEmpty()) {
+            member.setCreateTs(LocalDate.now());
+        }
+        member.setLastUpdatedTs(LocalDate.now());
+        return memberRepository.save(member);
+    }
+
 }
