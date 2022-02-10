@@ -18,7 +18,7 @@ public class ControllerAdvice {
             MethodArgumentNotValidException e, HttpServletRequest request) {
         StringBuilder errors = new StringBuilder();
         for (final FieldError error : e.getBindingResult().getFieldErrors()) {
-            errors.append(error.getField()).append(": ").append(error.getDefaultMessage());
+            errors.append(error.getField() + ": " + error.getDefaultMessage());
             errors.append("\n");
         }
         return new ResponseEntity<>(String.format(ERROR, errors, request.getRequestURI()), HttpStatus.BAD_REQUEST);
