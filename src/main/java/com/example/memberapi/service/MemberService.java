@@ -45,4 +45,9 @@ public class MemberService implements IMemberService{
         return memberRepository.save(member);
     }
 
+    @Override
+    public void deleteMember(Long id) {
+        memberRepository.deleteById(id);
+    }
+
 }

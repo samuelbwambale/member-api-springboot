@@ -11,4 +11,5 @@ public interface IMemberService {
     Optional<Member> getMemberById(Long id);
     Member addMember(Member member);
     Member updateMember(Long id, Member member);
+    void deleteMember(Long id);
 }
