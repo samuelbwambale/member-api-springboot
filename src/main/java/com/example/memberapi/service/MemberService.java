@@ -40,16 +40,15 @@ public class MemberService implements IMemberService{
         Optional<Member> optionalMember = memberRepository.findById(id);
         if (optionalMember.isEmpty()) {
             member.setCreateTs(LocalDate.now());
-            member.setLastUpdatedTs(LocalDate.now());
-            return memberRepository.save(member);
 
         } else {
             Member existing = optionalMember.get();
-            existing.setFirstName(member.getFirstName());
-            existing.setLastName(member.getLastName());
-            existing.setLastUpdatedTs(LocalDate.now());
-            return memberRepository.save(existing);
+            member.setId(existing.getId());
+            member.setCreateTs(existing.getCreateTs());
         }
+        member.setLastUpdatedTs(LocalDate.now());
+        return memberRepository.save(member);
+
     }
 
     @Override
