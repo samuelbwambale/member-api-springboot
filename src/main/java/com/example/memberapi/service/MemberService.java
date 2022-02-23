@@ -48,7 +48,6 @@ public class MemberService implements IMemberService{
         }
         member.setLastUpdatedTs(LocalDate.now());
         return memberRepository.save(member);
-
     }
 
     @Override
